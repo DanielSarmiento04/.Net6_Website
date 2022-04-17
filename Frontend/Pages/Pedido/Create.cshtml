@@ -1,0 +1,53 @@
+@page
+@model Pages.FormPedidoModel
+@{
+    ViewData["Title"] = "Formulario de Pedido";
+    var cont = 0;
+    var productos = Model.listProductos;
+}
+<div class="text-center" id = "cuerpo">
+    <form method="POST"> 
+        <div class="mb-3 row">
+            <col>
+            <label for="id" class="col-sm-3 col-form-label">Productos</label>
+            <div class="col-sm-6">
+                <label for="id" class="form-control-plaintext">Cantidad</label>
+            </div>
+        </div> 
+
+        @* <div class="mb-3 row right">
+            <label for="id" class="col-sm-2 col-form-label">id: </label>
+            <div class="col-sm-8">
+                <input type="number"  class="form-control"  id="id" name="id" placeholder="pedido.id" required>
+            </div>
+        </div>     *@
+
+        @try
+        {
+            @foreach (var producto in productos)
+            {
+                <div class="mb-3 row">
+                    <label for="cantidad_@cont" class="col-sm-3 col-form-label">@producto.nombre:</label>
+                    <input type="number" class="form-control-plaintext d-none"  name="id_@cont"  asp-for="@producto.id" readonly="readonly" >
+                    <div class="col-sm-6">
+                        <select class="form-control" id="exampleFormControlSelect1" name="cantidad_@cont">
+                            @for (int i = 0; i < 12; i++)
+                            {
+                                <option>@i</option>
+                            }
+                        </select>
+                    </div>
+                </div>    
+
+                cont += 1;
+            }
+        }        
+        catch (System.Exception)
+        {      
+            throw;
+        }
+        
+        <hr>
+        <button type="submit" class="btn btn-success">Crear</button>
+    </form>
+</div>

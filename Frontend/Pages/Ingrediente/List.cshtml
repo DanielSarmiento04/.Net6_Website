@@ -1,0 +1,53 @@
+@page
+@model Frontend.Pages.ListIngredienteModel;
+@{
+    ViewData["Title"] = "Lista de Ingredientes";
+    var ingredientes = Model.Ingredientes;
+}
+@* @section head {
+    <link href="@Url.Content("~/Content/css/bootstrap.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/css/bootstrap-theme.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/css/site.css")" rel="stylesheet" />
+} *@
+@if (ingredientes.Count() != 0)
+{     
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Imagen</th>
+                <th scope="col">Cantidad Disponible</th>
+                <th scope="col" colspan="5">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var ingrediente in ingredientes)
+            {
+                <tr>
+                    <td>@ingrediente.id</td>
+                    <td>@ingrediente.nombre</td> 
+                    <td><img src=@ingrediente.imagen alt="Nose Encontro" id = "ImagenLista"></td>
+                    <td>@ingrediente.cantidad</td>
+                    <td colspan="8" class ="btn-group">
+                        <a class="btn btn-info" asp-page="./Details"asp-route-IngredienteId="@ingrediente.id"> <i class="fas fa-adjust">Detalles</i></a>
+                        <a class="btn btn-info" asp-page="./Edit"asp-route-IngredienteId="@ingrediente.id">Administrar</a>
+
+                        <form method="POST">
+                            <input type="number" class="form-control d-none" id="id" name="id" placeholder="id" asp-for="@ingrediente.id">
+                            <button type="submit"class="btn btn-danger" href="">Eliminar</button>
+                        </form> 
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-danger" role="alert">
+        No hay ingredientes registrados
+        <h2>Lo invitamos a registrar el ingredientes 🥑🥑</h2>
+        <a class="btn btn-info" asp-page="./Create">Crear Persona</a>
+    </div>
+}

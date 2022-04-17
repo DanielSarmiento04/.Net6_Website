@@ -1,0 +1,100 @@
+@page
+@model Frontend.Pages.ListPedidoModel;
+@{
+    ViewData["Title"] = "Lista de Pedidos";
+    var Pedidos = Model.Pedidos;
+}
+@if (Pedidos.Count() == 0)
+{
+    <div class="alert alert-info">
+        <p>No hay pedidos</p>
+        <h2>Lo invitamos a registrar los pedidos🙈🙈🙈</h2>
+        <a class="btn btn-info" asp-page="./Create">Crear pedidos</a>
+    </div>
+}
+
+else
+{
+
+    <div id="cuerpo">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Informacion Productos</th>
+                    <th scope="col">Total a pagar</th>
+                    <th scope="col">Descuento</th>
+                    <th scope="col">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var pedido in Pedidos)
+                {
+                    <tr>
+                        <td>@pedido.id</td>
+                        <td>
+                            <ul class="list-group">
+                                @if (pedido?.infoProductos != null)
+                                {
+                                    var productosList = pedido.infoProductos.Split(",");
+                                    @foreach (var infoProducto in productosList)
+                                    {
+                                        var atributoProducto = infoProducto.Split("-");
+                                        if (atributoProducto[3] != "0")
+                                        {
+                                            <li class="list-group-item">
+                                                <b c>@atributoProducto[3]</b>
+                                                @atributoProducto[1]
+                                            </li>   
+                                        }
+                                    }
+                                }
+@* 
+                                @foreach (var producto in pedido.productos)
+                                {
+                                    if (producto?.ingredienteString != null)
+                                    {
+                                        var infoIngredientes = producto.ingredienteString.Split(',');
+                                        foreach (var ingrediente in infoIngredientes)
+                                        {
+                                            var atributos = ingrediente.Split('-');
+                                            <li class="list-group-item">
+                                                @atributos[1]<b >@atributos[2]</b>
+                                            </li>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <li class="list-group-item">
+                                            @producto.nombre
+                                        </li>
+                                    }
+  
+                                } *@
+                            </ul>
+                        </td>
+                        <td>@pedido.totalPagar</td>
+                        <td>
+                            @if (@pedido?.descuento != null)
+                            {
+                                @pedido.descuento
+                            }
+                            else
+                            {
+                                <b>0</b>
+                            }
+                        </td>
+                        <td>
+                            <a class="btn btn-info" asp-page="./Details" asp-route-PedidoId="@pedido.id"> <i class="fas fa-adjust"></i>Detalles</a>
+                            <a class="btn btn-info" asp-page="./Edit" asp-route-PedidoId="@pedido.id">Editar</a>
+                            <form method="POST">
+                                <input type="number" class="form-control d-none" id="id" name="id" placeholder="id" asp-for="@pedido.id">
+                                <button type="submit" class="btn btn-danger" href="">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

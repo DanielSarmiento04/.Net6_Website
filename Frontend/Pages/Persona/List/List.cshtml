@@ -1,0 +1,51 @@
+@page
+@model Frontend.Pages.ListPersonaModel;
+@{
+    ViewData["Title"] = "Lista de Personas";
+    var personas = Model.Personas;
+}
+@if (personas.Count() == 0)
+{
+    @* Create a design for show that there aren't people and can be to create  *@
+    <div class="alert alert-info">
+        <p>No hay Personas registradas</p>
+        <h2>Lo invitamos a registrar el personal🙈🙈🙈</h2>
+        <a class="btn btn-info" asp-page="../Create/Create">Crear Persona</a>
+    </div>
+}
+else
+{
+    <div id="cuerpo">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Cargo</th>
+                    <th scope="col">Opciones</th<>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var persona in Model.Personas)
+                {
+                    <tr>
+                        <td>@persona.id</td>
+                        <td>@persona.nombre </td>
+                        <td>@persona.cargo </td>
+                        <td>
+                            <a class="btn btn-info" asp-page="../Details/Details"asp-route-PersonaId="@persona.id"> <i class="fas fa-adjust">Detalles</i></a>
+                            <a class="btn btn-info" asp-page="../Edit/Edit"asp-route-PersonaId="@persona.id">Editar</a>
+
+                            <form method="POST">
+                                <input type="number" class="form-control d-none" id="id" name="id" placeholder="id" asp-for="@persona.id">
+                                <button type="submit"class="btn btn-danger" href="">Eliminar</button>
+                            </form> 
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+}

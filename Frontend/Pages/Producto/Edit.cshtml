@@ -1,0 +1,102 @@
+@page
+@model Frontend.Pages.EditProductoModel
+@{
+    ViewData["Title"] = "Editar Producto";
+    var producto = Model.Producto;
+    var ingredientes = Model.ingredientes;
+    var cont = 0;
+}
+<div class="text-center" id = "cuerpo">
+    <form method="POST">
+        <div class="mb-3 row d-none">
+            <label for="id" class="col-sm-2 col-form-label">id: </label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control-plaintext d-none" id="id" name="id" asp-for="@producto.id">
+            </div>
+        </div>
+
+
+        <div class="mb-3 row">
+            <label for="nombre" class="col-sm-2 col-form-label">Nombre: </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control-plaintext" id="nombre" name="nombre" asp-for="@producto.nombre" required>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="descripcion" class="col-sm-2 col-form-label">Descripcion: </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control-plaintext" id="descripcion" name="descripcion" asp-for="@producto.descripcion" required>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="precio" class="col-sm-2 col-form-label">Precio: </label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control-plaintext" id="precio" name="precio" asp-for="@producto.precio" >
+                <span class="text-danger" asp-validation-for="Producto.precio"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="imagen" class="col-sm-2 col-form-label">Imagen: </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control-plaintext" id="imagen" name="imagen" asp-for="@producto.imagen" required>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="descuento" class="col-sm-2 col-form-label">Descuento: </label>
+            <div class="col-sm-10">
+                <select class="form-control" id="exampleFormControlSelect1" name="descuento" asp-for="@producto.descuento" required>
+                    @for (int i = 0; i <= 50; i = i + 5)
+                    {
+                        string porcentaje = $"{i}%";
+                        <option>@i</option>
+                    }
+                </select>
+            </div>
+        </div> 
+
+        <div class="mb-3 row">
+            <label for="desicion" class="col-sm-2 col-form-label">Mostrar al publico: </label>
+            <div class="col-sm-4">
+                <select class="form-control" id="exampleFormControlSelect1" name="desicion" asp-for="@producto.desicion" >
+                    @foreach (var desicion in Enum.GetNames(typeof(Dominio.TiposDesicion)))
+                    {
+                        <option>@desicion</option>
+                    }
+                    @* <option selected>@producto.desicion</option> *@
+                </select>
+            </div>
+        </div>
+
+        @*Build  a inoput select for know how many ingredients have *@
+        @try
+        {
+            @foreach (var ingrediente in ingredientes)
+            {
+                <div class="mb-3 row">
+                    <label for="cantidad_@cont" class="col-sm-2 col-form-label">@ingrediente.nombre:</label>
+                    <input type="number" class="form-control-plaintext d-none"  name="id_@cont"  asp-for="@ingrediente.id" readonly="readonly" >
+                    <div class="col-sm-10">
+                        <select class="form-control" id="exampleFormControlSelect1" name="cantidad_@cont">
+                            @for (int i = 0; i < 30; i++)
+                            {
+                                <option>@i</option>
+                            }
+                        </select>
+                    </div>
+                </div>    
+                cont++;
+            }
+        }        
+        catch (System.Exception)
+        {      
+            throw;
+        }
+
+        <hr>
+        <button type="submit" class="btn btn-success">Actualizar</button>
+    </form>
+</div>

@@ -1,0 +1,49 @@
+@page
+@model Frontend.Pages.ListProductoModel;
+@{
+    ViewData["Title"] = "Lista de Productos";
+    var productos = Model.Productos;
+}
+@if (productos.Count() == 0)
+{
+    <div class="alert alert-warning">
+        No hay productos disponibles
+        <h2>Lo invitamos a registrar el personal🙈🙈🙈</h2>
+        <a class="btn btn-info" asp-page="./Create">Crear Persona</a>
+    </div>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">precio</th>
+                <th scope="col">Imagen</th>
+                <th scope="col">Descuento</th>
+                <th scope="col" colspan="5">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var producto in Model.Productos)
+            {
+                <tr>
+                    <td>@producto.id</td>
+                    <td>@producto.nombre</td>
+                    <td>@producto.precio </td>
+                    <td><img src=@producto.imagen alt="Nose Encontro" id = "ImagenLista"></td>
+                    <td>@producto.descuento</td>
+                    <td colspan="8" class="btn-group">
+                        <a class="btn btn-info" asp-page="./Details" asp-route-ProductoId="@producto.id"> <i class="fas fa-adjust">Detalles</i></a>
+                        <a class="btn btn-info" asp-page="./Edit" asp-route-ProductoId="@producto.id">Administrar</a>
+                        <form method="POST">
+                            <input type="number" class="form-control d-none" id="id" name="id" placeholder="id" asp-for="@producto.id">
+                            <button type="submit" class="btn btn-danger" href="">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

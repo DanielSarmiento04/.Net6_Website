@@ -1,0 +1,56 @@
+@page
+@model Frontend.Pages.InventarioIngredienteModel;
+@{
+    ViewData["Title"] = "Inventario Ingredientes" ;
+    var cont = 0;
+    var ingredientes = Model.Ingredientes;
+}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Cantidad disponible</th>
+            <th scope="col">Cantidad de paquetes</th>
+            <th scope="col">Cantidad de unidades por paquete</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var ingredinete in ingredientes)
+        {
+            <form method="POST">
+                <tr>
+                    <td>@ingredinete.id</td>
+                    <td>@ingredinete.nombre</td>
+                    <td>@ingredinete.cantidad</td>
+                    <td>
+                        <select class="form-control" id="exampleFormControlSelect1" name="cantidadPaquetes_@cont" required>
+                            @for (int i = 1; i <= 50; i++)
+                            {
+                                <option>@i</option>
+                            }
+                        </select>  
+                    </td>
+                    <td>
+                        <select class="form-control" id="exampleFormControlSelect1" name="cantidadIngredientesPaquete_@cont" required>
+                            @for (int i = 0; i <= 50; i++)
+                            {
+                                <option>@i</option>
+                            }
+                        </select>  
+                    </td>
+                    
+                    <td>
+                        
+                        <input type="number" class="form-control d-none" id="id" name="id" placeholder="id" asp-for="@ingredinete.id" />
+                        <input type="number" class="form-control d-none" id="cont" name="cont" placeholder="cont" asp-for="@cont" />   
+                        <button type="submit"class="btn btn-info" href="">Actualizar</button>
+                        
+                    </td>
+                </tr>
+            </form> 
+            cont++;
+        }
+    </tbody>
+</table>

@@ -1,0 +1,46 @@
+@page
+@model Frontend.Pages.EditPersonaModel
+@{
+    ViewData["Title"] = "Edicion Persona";
+    var persona = Model.Persona;
+}
+<div class="text-center" id = "cuerpo"> 
+        <form method="POST">
+        <div class="mb-4 row d-none">
+            <label for="id" class="col-sm-4 col-form-label">id</label>
+            <div class="col-sm-4">
+                <input type="number" class="form-control-plaintext" id="colFormLabelSm"  name= "id" asp-for ="@persona.id">
+            </div>
+        </div> 
+
+        <div class="mb-4 row">
+            <label for="nombre" class="col-sm-4 col-form-label">Nombre</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control-plaintext" id="colFormLabelSm"  name= "nombre" asp-for ="@persona.nombre">
+            </div>
+        </div> 
+
+        @* <div class="mb-4 row">
+            <label for="contraseña" class="col-sm-4 col-form-label">Contraseña</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control-plaintext" id="colFormLabelSm"  name= "contraseña" asp-for ="@persona.contraseña">
+            </div>
+        </div>  *@
+
+        <div class="mb-4 row">
+            <label for="cargo" class="col-sm-4 col-form-label">Cargo: </label>
+            <div class="col-sm-4">
+                <select class="form-control" id="exampleFormControlSelect1" name="cargo" asp-for="@persona.cargo" >
+                    <option selected>@persona.cargo</option>
+                    @foreach (var rol in Enum.GetNames(typeof(Dominio.TiposCargo)))
+                    {
+                        <option>@rol</option>
+                    }
+                </select>
+            </div>
+        </div>
+        
+        <hr>
+        <button type="submit" class="btn btn-success">Actualizar</button>
+    </form>
+</div>

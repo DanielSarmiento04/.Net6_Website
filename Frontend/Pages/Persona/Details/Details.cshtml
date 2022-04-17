@@ -1,0 +1,11 @@
+@page
+@model Frontend.Pages.DetailsPersonaModel;
+@{
+    ViewData["Title"] = "Detalles Persona";
+    var persona = Model.Persona;
+}
+<ul class="list-group list-group-flush" id = "cuerpo">
+    <li class="list-group-item"> <b>id: </b> @persona.id</li>
+    <li class="list-group-item"> <b>Nombre: </b> @persona.nombre</li>
+    <li class="list-group-item"> <b>Cargo: </b> @persona.cargo</li>
+</ul>

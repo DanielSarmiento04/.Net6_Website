@@ -1,0 +1,21 @@
+@page
+@model Frontend.Pages.DetailsPedidoModel
+@{
+    ViewData["Title"] = "Detalles del pedido";
+    var pedido = Model.Pedido;
+}
+<ul class="list-group list-group-flush" id = "cuerpo">
+    <li class="list-group-item"> <b>id: </b> @pedido.id</li>
+    <li class="list-group-item"> <b>Total  pagar: </b> @pedido.totalPagar</li>
+    <li class="list-group-item"> <b>Lista de producto: </b> 
+    
+    <ol>
+        @* @foreach (var producto in pedido.productos)
+        {
+           <li>@producto.nombre</li> 
+        } *@
+    </ol>
+    </li>
+    
+    <li class="list-group-item"> <b>Descuento: </b>@pedido.descuento</li>
+</ul>

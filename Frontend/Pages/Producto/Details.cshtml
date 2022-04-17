@@ -1,0 +1,30 @@
+@page
+@model Frontend.Pages.DetailsProductoModel
+@{
+    ViewData["Title"] = "Detalles Producto";
+    var producto = Model.Producto;
+    var ingredientes = producto.ingredientes;
+    var infoIngrediente = producto.ingredienteString.Split(",");
+    
+}
+<ul class="list-group list-group-flush" id = "cuerpo">
+    <li class="list-group-item"> <b>id: </b> @producto.id</li>
+    <li class="list-group-item"> <b>Nombre: </b> @producto.nombre</li>
+    <li class="list-group-item"> <b>Precio: </b> @producto.precio</li>
+    <li class="list-group-item" id = "ImagenLista"> <b>Imangen: </b><img src=@producto.imagen alt="No encontro"></li>
+    <li class="list-group-item"> <b>Descuento: </b>@producto.descuento</li>
+    <li class="list-group-item"> <b>Descripcion: </b>@producto.descripcion</li>
+    <li class="list-group-item"> <b>Mostrar al publico: </b>@producto.desicion</li>
+    <li class="list-group-item"> 
+        <b>Ingredientes: </b>
+        <ul class="list-group">
+            @foreach(var dato in infoIngrediente)
+            {      
+                var atributos = dato.Split("-");
+                <li class="list-group-item d-flex justify-content-between align-items-center  col-sm-2 ">
+                    @atributos[1] <b class="badge badge-primary badge-pill text-dark" >@atributos[2]</b>
+                </li>
+            }
+        </ul>    
+    </li>
+</ul>

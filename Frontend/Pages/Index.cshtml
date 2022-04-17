@@ -1,0 +1,56 @@
+﻿@page
+@model IndexModel
+@using System.Collections.Generic;
+@{
+    ViewData["Title"] = "Inicio";
+    var cont = 1;
+    int inicio = 1;
+    var ProductosVista = Model.ProductosVista.ToList();
+    var Productos = Model.Productos;
+    int longitud = Productos.Count();
+    var infoIngredientes = "";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Bienvenidos a Mr. Perro</h1>
+    <h2>Disfruta nuestro menu.</h2>
+</div>
+@if (Productos.Count() == 0)
+{
+    <div class="alert alert-danger" role="alert">
+        Estamos haciendo tareas de mantenimiento, vuelve mas tarde.
+    </div>
+}
+else
+{
+    @foreach (var producto in Productos)
+    {
+        ProductosVista.Add(producto);
+        if ((producto.desicion == Dominio.TiposDesicion.Si) && (cont % 4 == 0 || cont == longitud))
+        {
+            <div class="row card-deck">
+                @foreach (var productoAsignado in ProductosVista)
+                {
+                    <div  class=" col-sm-3" style="width: 18rem;" >
+                        <img src="@productoAsignado.imagen" width="auto" alt="Card image cap" class="card-img-top" id="VistaIndex">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">@productoAsignado.nombre</h5>
+                                <p class="card-text">Precio: $@productoAsignado.precio</p>
+                                <b>Ingredientes:</b>
+                                <ul>
+                                    @foreach (var ingrediente in productoAsignado.ingredientes)
+                                    {
+                                        <li>@ingrediente.nombre</li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            ProductosVista.RemoveAll(x => x.desicion == Dominio.TiposDesicion.Si);
+        }
+        cont++;
+    }
+}

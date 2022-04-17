@@ -1,0 +1,55 @@
+@page
+@model Frontend.Pages.EditPedidoModel;
+@{
+    ViewData["Title"] = "Editar Pedido";
+    var pedido = Model.Pedido;
+    var cont = 0;
+}
+<div class="text-center" id = "cuerpo">
+    <form method="POST"> 
+
+        <div class="mb-3 row">
+            <label for="id" class="col-sm-3 col-form-label">Productos</label>
+            <div class="col-sm-6">
+                <label for="id" class="form-control-plaintext">Cantidad</label>
+            </div>
+        </div> 
+        
+        <div class="mb-3 row d-none">
+            <label for="id" class="col-sm-2 col-form-label">id: </label>
+            <div class="col-sm-8">
+                <input type="number"  id="id" name="id" asp-for="@pedido.id">
+            </div>
+        </div>     
+       
+
+        @try
+        {
+            @foreach (var producto in pedido.productos)
+            {
+                <div class="mb-3 row">
+                    <label for="cantidad_@cont" class="col-sm-3 col-form-label">@producto.nombre:</label>
+                    <input type="number" class="form-control-plaintext d-none"  name="id_@cont"  asp-for="@producto.id" readonly="readonly" >
+                    <div class="col-sm-6">
+                        <select class="form-control" id="exampleFormControlSelect1" name="cantidad_@cont" asp-for="@producto.cantidad">
+                            @for (int i = 0; i < 16; i++)
+                            {
+                                <option>@i</option>
+                            }
+                        </select>
+                    </div>
+                </div>    
+
+                cont += 1;
+            }
+        }        
+        catch (System.Exception)
+        {      
+            throw;
+        }
+        
+        <hr>
+        <button type="submit" class="btn btn-success">Actualizar</button>
+    </form>
+</div>
+@* <link rel="stylesheet" href="~/Edit.css" asp-append-version="true" /> *@
